@@ -1,8 +1,7 @@
 import wx
 
 class cronopy(wx.Frame):
-  Pro_nom="ninguno"
-  Tarea_nom="ninguna"
+  Pro_nom=""
   def __init__(self, title, pos, size):
     wx.Frame.__init__(self, None, -1, title, pos, size)
     m_proyecto = wx.Menu()
@@ -47,6 +46,6 @@ class cronopy(wx.Frame):
     if valor.ShowModal() == wx.ID_OK:
        self.pro_nom=valor.GetValue()
        print "You entered: %s" % self.pro_nom      
-       self.SetStatusText(self.pro_nom + ": " + self.Tarea_nom)
+       self.SetStatusText(self.pro_nom)
     valor.Destroy()  
 
