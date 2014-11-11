@@ -47,13 +47,14 @@ class cronopy(wx.Frame):
   def BarraP(self, tb):
     tb.ClearTools()
     proreg=tb.AddLabelTool(wx.ID_ANY, 'regresar', wx.Bitmap('imagenes/atras.png'), wx.NullBitmap, 0, "Ir a menu Inicial", "Regresar al menu inicial")
-    tarn=tb.AddLabelTool(wx.ID_ANY, 'pronuevo', wx.Bitmap('imagenes/Folder_Empty.png'), wx.NullBitmap, 0, "Nuevo Proyecto", "Crear proyecto")
+    pronuevo=tb.AddLabelTool(wx.ID_ANY, 'pronuevo', wx.Bitmap('imagenes/Folder_Empty.png'), wx.NullBitmap, 0, "Nuevo Proyecto", "Crear proyecto")
     tb.AddLabelTool(wx.ID_ANY, 'proabrir', wx.Bitmap('imagenes/Folder_Add.png'), wx.NullBitmap, 0, "Abrir Proyecto", "Abrir proyecto ya existente")
     tb.AddLabelTool(wx.ID_ANY, 'prorenom', wx.Bitmap('imagenes/Folder_Edit.png'), wx.NullBitmap, 0, "Salir", "Eliminar tarea/subtarea")
     tb.AddSeparator()
     tb.AddLabelTool(wx.ID_ANY, 'proin', wx.Bitmap('imagenes/Button_Up.png'), wx.NullBitmap, 0, 'Importar Proyecto', "Importar informacion de proyecto")
     tb.AddLabelTool(wx.ID_ANY, 'proex', wx.Bitmap('imagenes/Button_Down.png'), wx.NullBitmap, 0, 'Exportar Proyecto', "Exportar informacion de proyecto")
     self.Bind(wx.EVT_TOOL, self.AdtbI, proreg)
+    self.Bind(wx.EVT_TOOL, self.SiPronuevo, pronuevo)
     tb.Realize()
     return tb
 
