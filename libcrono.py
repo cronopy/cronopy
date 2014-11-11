@@ -43,18 +43,7 @@ class cronopy(wx.Frame):
     self.Bind(wx.EVT_TOOL, self.SiSalir, opfin)
     return tb
 
-  
-  def BarraProyectos(self, tb):
-    tb.ClearTools()    
-    pro2=tb.AddLabelTool(wx.ID_ANY, 'pronuevo', wx.Bitmap('imagenes/Folder_Empty.png'), wx.NullBitmap, 0, "Proyecto Nuevo", "Crear proyecto")
-    tb.AddLabelTool(wx.ID_ANY, 'proabrir', wx.Bitmap('imagenes/Folder_Add.png'), wx.NullBitmap, 0, "Abrir Proyecto", "Abrir proyecto eya existente")
-    tb.AddLabelTool(wx.ID_ANY, 'prorenom', wx.Bitmap('imagenes/Folder_Edit.png'), wx.NullBitmap, 0, "Renombrar Proyecto", "Cambiar nombre a proyecto ya existente")
-    tb.AddSeparator()
-    tb.AddLabelTool(wx.ID_ANY, 'proin', wx.Bitmap('imagenes/Button_Up.png'), wx.NullBitmap, 0, "Importar Proyecto", "Importar informacion de proyecto ")
-    tb.AddLabelTool(wx.ID_ANY, 'proex', wx.Bitmap('imagenes/Button_Down.png'), wx.NullBitmap, 0, "Exportar Proyecto", "Exportar informacion de proyecto")
-    self.Bind(wx.EVT_TOOL, self.AdtbTareas, pro2)   
-    tb.Realize()
-
+ 
   def BarraP(self, tb):
     tb.ClearTools()
     proreg=tb.AddLabelTool(wx.ID_ANY, 'regresar', wx.Bitmap('imagenes/atras.png'), wx.NullBitmap, 0, "Ir a menu Inicial", "Regresar al menu inicial")
