@@ -5,33 +5,93 @@ Blanco=(0,0,0)
 class cronopy(wx.Frame):
   Pro_nom="ninguno"
   Tarea_nom="ninguna"
+
   def __init__(self, title, pos, size):
     wx.Frame.__init__(self, None, -1, title, pos, size)
-
+    self.sizeH = 250
     
     self.CreateStatusBar()
-    self.crearToolbar()
+    self.toolbar = self.CreateToolBar()
+    self.toolbar=self.BarraInicial(self.toolbar)
+    _,self.toolbarH = self.toolbar.GetSize()
+    self.SetSize((-1, self.sizeH))
     self.SetStatusText("Bienvenido a Cronopy!")
 
 
+  def AdtbProyectos(self, event):
+    self.toolbar=self.BarraP(self.toolbar)
+    _,self.toolbarH = self.toolbar.GetSize()
+ 
+  def AdtbTareas(self, event):
+    self.toolbar=self.BarraTareas(self.toolbar)
+    _,self.toolbarH = self.toolbar.GetSize()
 
-  def crearToolbar(self):
-   toolbar= self.CreateToolBar();
-   for elemento in self.barraInicial():
-      self.crearEspacio(toolbar, *elemento)
-   toolbar.AddSeparator()
-   toolbar.Realize()
+  def AdtbI(self, event):
+    self.toolbar=self.BarraI(self.toolbar)
+    _,self.toolbarH = self.toolbar.GetSize()
+  
 
-  def crearEspacio(self, toolbar, etiqueta, archivo, ayuda, manejador):
-   if not etiqueta:
-     toolbar.AddSeparator()
-     return
-   icono=wx.Image(archivo, wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-   espacio = toolbar.AddSimpleTool(-1, icono, etiqueta, ayuda)
-   self.Bind(wx.EVT_MENU, manejador, espacio)
+  def BarraInicial(self, tb):    
+    oppro= tb.AddLabelTool(1, 'Proyectos', wx.Bitmap('imagenes/Project.png'), wx.NullBitmap, 0, "Proyectos", "Opciones de proyecto")
+    optar=tb.AddLabelTool(2, 'Tareas', wx.Bitmap('imagenes/Project_2.png'), wx.NullBitmap, 0, "Tareas", "Opciones de tareas")
+    opinfo=tb.AddLabelTool(3, 'Info', wx.Bitmap('imagenes/Conversation.png'), wx.NullBitmap, 0, "Informacion", "Salir")
+    opfin=tb.AddLabelTool(4, 'Salir', wx.Bitmap('imagenes/Salir.png'), wx.NullBitmap, 0, "Salir", "Salir")
+    tb.Realize()
+    self.Bind(wx.EVT_TOOL, self.AdtbProyectos, oppro)
+    self.Bind(wx.EVT_TOOL, self.AdtbTareas, optar)
+    self.Bind(wx.EVT_TOOL, self.SiInfo, opinfo)
+    self.Bind(wx.EVT_TOOL, self.SiSalir, opfin)
+    return tb
 
-  def barraInicial(self):
-   return (("Proyectos", "imagenes/new.png", "Opciones de Proyecto", self.SiPronuevo), ("Tareas", "imagenes/open.png", "Opciones de tareas", self.SiInfo), ("Acerca de", "imagenes/save.png", "Informacion del aplicactivo", self.SiSalir))
+  
+  def BarraProyectos(self, tb):
+    tb.ClearTools()    
+    pro2=tb.AddLabelTool(wx.ID_ANY, 'pronuevo', wx.Bitmap('imagenes/Folder_Empty.png'), wx.NullBitmap, 0, "Proyecto Nuevo", "Crear proyecto")
+    tb.AddLabelTool(wx.ID_ANY, 'proabrir', wx.Bitmap('imagenes/Folder_Add.png'), wx.NullBitmap, 0, "Abrir Proyecto", "Abrir proyecto eya existente")
+    tb.AddLabelTool(wx.ID_ANY, 'prorenom', wx.Bitmap('imagenes/Folder_Edit.png'), wx.NullBitmap, 0, "Renombrar Proyecto", "Cambiar nombre a proyecto ya existente")
+    tb.AddSeparator()
+    tb.AddLabelTool(wx.ID_ANY, 'proin', wx.Bitmap('imagenes/Button_Up.png'), wx.NullBitmap, 0, "Importar Proyecto", "Importar informacion de proyecto ")
+    tb.AddLabelTool(wx.ID_ANY, 'proex', wx.Bitmap('imagenes/Button_Down.png'), wx.NullBitmap, 0, "Exportar Proyecto", "Exportar informacion de proyecto")
+    self.Bind(wx.EVT_TOOL, self.AdtbTareas, pro2)   
+    tb.Realize()
+
+  def BarraP(self, tb):
+    tb.ClearTools()
+    proreg=tb.AddLabelTool(wx.ID_ANY, 'regresar', wx.Bitmap('imagenes/atras.png'), wx.NullBitmap, 0, "Ir a menu Inicial", "Regresar al menu inicial")
+    tarn=tb.AddLabelTool(wx.ID_ANY, 'pronuevo', wx.Bitmap('imagenes/Folder_Empty.png'), wx.NullBitmap, 0, "Nuevo Proyecto", "Crear proyecto")
+    tb.AddLabelTool(wx.ID_ANY, 'proabrir', wx.Bitmap('imagenes/Folder_Add.png'), wx.NullBitmap, 0, "Abrir Proyecto", "Abrir proyecto ya existente")
+    tb.AddLabelTool(wx.ID_ANY, 'prorenom', wx.Bitmap('imagenes/Folder_Edit.png'), wx.NullBitmap, 0, "Salir", "Eliminar tarea/subtarea")
+    tb.AddSeparator()
+    tb.AddLabelTool(wx.ID_ANY, 'proin', wx.Bitmap('imagenes/Button_Up.png'), wx.NullBitmap, 0, 'Importar Proyecto', "Importar informacion de proyecto")
+    tb.AddLabelTool(wx.ID_ANY, 'proex', wx.Bitmap('imagenes/Button_Down.png'), wx.NullBitmap, 0, 'Exportar Proyecto', "Exportar informacion de proyecto")
+    self.Bind(wx.EVT_TOOL, self.AdtbI, proreg)
+    tb.Realize()
+    return tb
+
+  def BarraTareas(self, tb):
+    tb.ClearTools()
+    tarreg=tb.AddLabelTool(wx.ID_ANY, 'regresar', wx.Bitmap('imagenes/atras.png'), wx.NullBitmap, 0, "Ir a menu Inicial", "Regresar al menu inicial")
+    tarn=tb.AddLabelTool(wx.ID_ANY, 'tarnueva', wx.Bitmap('imagenes/File.png'), wx.NullBitmap, 0, "Nueva Tarea", "Crear nueva tarea")
+    tb.AddLabelTool(wx.ID_ANY, 'tarsub', wx.Bitmap('imagenes/File_Add.png'), wx.NullBitmap, 0, "Nueva Subtarea", "Crear tarea dependeinte de otra tarea")
+    tb.AddLabelTool(wx.ID_ANY, 'tarrenom', wx.Bitmap('imagenes/File_Edit.png'), wx.NullBitmap, 0, "Renombrar Tarea", "Cambiar nombre a tarea o subtarea existente")
+    tb.AddLabelTool(wx.ID_ANY, 'tarelim', wx.Bitmap('imagenes/File_Delete.png'), wx.NullBitmap, 0, "Eliminar Tarea", "Eliminar tarea/subtarea")
+    self.Bind(wx.EVT_TOOL, self.AdtbI, tarreg)
+    tb.Realize()
+    return tb
+
+  def BarraI(self, tb):
+    tb.ClearTools()
+    prom=tb.AddLabelTool(wx.ID_ANY, 'Proy', wx.Bitmap('imagenes/Project.png'), wx.NullBitmap, 0, "Proyecto", "Crear nueva tarea")
+    tarm=tb.AddLabelTool(wx.ID_ANY, 'tarsub', wx.Bitmap('imagenes/Project_2.png'), wx.NullBitmap, 0, "Tareas", "Crear tarea dependeinte de otra tarea")
+    opinfo=tb.AddLabelTool(wx.ID_ANY, 'tarrenom', wx.Bitmap('imagenes/Conversation.png'), wx.NullBitmap, 0, "Info", "Cambiar nombre a tarea o subtarea existente")
+    finm=tb.AddLabelTool(wx.ID_ANY, 'tarelim', wx.Bitmap('imagenes/Salir.png'), wx.NullBitmap, 0, "Salir", "Eliminar tarea/subtarea")
+    self.Bind(wx.EVT_TOOL, self.AdtbTareas, tarm)
+    self.Bind(wx.EVT_TOOL, self.AdtbProyectos, prom)
+    self.Bind(wx.EVT_TOOL, self.SiInfo, opinfo)
+    self.Bind(wx.EVT_TOOL, self.SiSalir, finm)
+    tb.Realize()
+    return tb
+
 
   def SiSalir(self, event):
     self.Close()
